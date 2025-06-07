@@ -408,7 +408,7 @@ Kubaparken - World
 13:45
 Nilsen's Southern Harmony
 country
-Roots, Rock ´n´ Roll @ Kongens gate
+Roots, Rock ´n´ roll @ Kongens gate
 13:45
 Mundi Musica
 kor
@@ -592,7 +592,7 @@ Lindeberg Kulturfestival
 14:30
 Local Hero
 rock
-Roots, Rock ´n´ Roll @ Kongens gate
+Roots, Rock ´n´ roll @ Kongens gate
 14:30
 Tea med band
 pop
@@ -776,7 +776,7 @@ Birkelunden by Stovner Rockefabrikk
 15:15
 Cowboyfrokost
 country
-Roots, Rock ´n´ Roll @ Kongens gate
+Roots, Rock ´n´ roll @ Kongens gate
 15:15
 Holly Hasbeen
 blues/soul
@@ -992,7 +992,7 @@ Streetbackboys @ Rockefeller
 16:00
 Perfekt Defekt
 punk
-Roots, Rock ´n´ Roll @ Kongens gate
+Roots, Rock ´n´ roll @ Kongens gate
 16:00
 Posner
 elektronika
@@ -1104,7 +1104,7 @@ SALT Art & Music
 16:45
 Thee K-OTICS
 garage-rock/surf
-Roots, Rock ´n´ Roll @ Kongens gate
+Roots, Rock ´n´ roll @ Kongens gate
 16:55
 Kulturgruppa fra Notodden
 rock
@@ -1256,7 +1256,7 @@ SALT Art & Music
 17:30
 Birgitte And The Dusty Trails
 country
-Roots, Rock ´n´ Roll @ Kongens gate
+Roots, Rock ´n´ roll @ Kongens gate
 17:30
 MIKE TV
 rock
@@ -1408,7 +1408,7 @@ Sentralen
 18:15
 The Chord Buddies
 punk
-Roots, Rock ´n´ Roll @ Kongens gate
+Roots, Rock ´n´ roll @ Kongens gate
 18:15
 Even Martinsen
 country
@@ -1524,7 +1524,7 @@ Botsparken, Reggae
 19:00
 Hard Luck Street
 rock
-Roots, Rock ´n´ Roll @ Kongens gate
+Roots, Rock ´n´ roll @ Kongens gate
 19:00
 Syver & Piotrek
 elektronika
@@ -1672,7 +1672,7 @@ Tee Prod @ Torggata
 19:45
 NoGoZone
 punk
-Roots, Rock ´n´ Roll @ Kongens gate
+Roots, Rock ´n´ roll @ Kongens gate
 19:45
 MALVIN
 pop
@@ -1800,7 +1800,7 @@ Tee Prod @ Torggata
 20:30
 Elvarheim
 country
-Roots, Rock ´n´ Roll @ Kongens gate
+Roots, Rock ´n´ roll @ Kongens gate
 20:30
 Oslo Skrotum
 punk
@@ -1936,7 +1936,7 @@ Jaeger
 21:15
 VILJAR RØYSI
 country
-Roots, Rock ´n´ Roll @ Kongens gate
+Roots, Rock ´n´ roll @ Kongens gate
 21:15
 Værx
 elektronika
@@ -2024,7 +2024,7 @@ Fuglen, Pilestredet
 22:00
 Skanimals
 punk
-Roots, Rock ´n´ Roll @ Kongens gate
+Roots, Rock ´n´ roll @ Kongens gate
 22:00
 Lord Leo
 rock
@@ -2100,7 +2100,7 @@ Dattera til Hagen
 22:35
 Deepthroat Diaré
 punk
-Roots, Rock ´n´ Roll @ Kongens gate
+Roots, Rock ´n´ roll @ Kongens gate
 23:00
 Vegard Wolf-Dyvik (Of Norway)
 elektronika
@@ -2290,13 +2290,27 @@ Vaterland
                 };
                 
                 const initCurrentTimeMarker = () => {
-                    // NOTE: For demonstration, using a fixed date. In a real scenario, use new Date().
-                    // const now = new Date(); 
-                    const now = new Date('2025-06-07T14:30:00'); // Example time
+                    const now = new Date();
+                    const nowInMinutes = now.getHours() * 60 + now.getMinutes(); 
+                    let firstUpcomingSlot = null;
                     
-                    const nowInMinutes = now.getHours() * 60 + now.getMinutes(); let firstUpcomingSlot = null;
-                    document.querySelectorAll('.timeslot-container').forEach(slot => { const bucketInMinutes = timeToMinutes(slot.dataset.timeBucket); if (bucketInMinutes < nowInMinutes) slot.classList.add('is-past'); else if (!firstUpcomingSlot) firstUpcomingSlot = slot; });
-                    if (firstUpcomingSlot && document.querySelector('.is-past')) { const timeMarker = document.createElement('div'); timeMarker.id = 'time-marker'; scheduleContainer.insertBefore(timeMarker, firstUpcomingSlot); setTimeout(() => timeMarker.scrollIntoView({ behavior: 'smooth', block: 'center' }), 200); }
+                    document.querySelectorAll('.timeslot-container').forEach(slot => { 
+                        const bucketInMinutes = timeToMinutes(slot.dataset.timeBucket); 
+                        if (bucketInMinutes < nowInMinutes) {
+                            slot.classList.add('is-past'); 
+                        } else if (!firstUpcomingSlot) {
+                            firstUpcomingSlot = slot; 
+                        }
+                    });
+
+                    // Only add the marker if the festival is ongoing (i.e., there are both past and future events)
+                    if (firstUpcomingSlot && document.querySelector('.is-past')) { 
+                        const timeMarker = document.createElement('div'); 
+                        timeMarker.id = 'time-marker'; 
+                        scheduleContainer.insertBefore(timeMarker, firstUpcomingSlot); 
+                        // Scroll the marker into view smoothly after a brief delay for rendering
+                        setTimeout(() => timeMarker.scrollIntoView({ behavior: 'smooth', block: 'center' }), 200); 
+                    }
                 };
 
                 readURL();
